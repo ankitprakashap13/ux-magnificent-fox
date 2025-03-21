@@ -1,16 +1,14 @@
 version: '3.8'
 
 services:
-  app:
+  react:
     build: .
-    container_name: magnificentfox_app
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
+    container_name: magnificentfox_react
     networks:
       - magnificentfox_net
+    depends_on:
+      - web  # Django app
 
 networks:
   magnificentfox_net:
-    external: true  # Ensure it's the same as in `MagnificentFox`
+    external: true

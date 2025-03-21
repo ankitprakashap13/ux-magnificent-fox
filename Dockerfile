@@ -6,9 +6,8 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Stage 2: Serve React App with Nginx
-FROM nginx:latest
-COPY --from=builder /app/build /usr/share/nginx/html
-
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Stage 2: Serve React App (files will be copied to Python's Nginx)
+FROM alpine:latest
+WORKDIR /app
+COPY --from=builder /app/build /app/build
+CMD ["sh", "-c", "echo 'React build complete' && sleep infinity"]
